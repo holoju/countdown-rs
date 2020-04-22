@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn symbol_table<'a>() -> HashMap<char, ([&'a str; 6], usize)> {
+pub fn tabla_simbolos<'a>() -> HashMap<char, ([&'a str; 6], usize)> {
     let data = vec![
         [
             "   ",
