@@ -9,24 +9,35 @@ mod fonts;
 
 fn main() {
     let argumentos: Vec<String> = env::args().skip(1).collect();
-    if argumentos.len() != 1 {
+    if argumentos.len() != 2 {
         let programa: String = env::args().next().unwrap();
         eprintln!("Error en el uso del programa. Solo debe utiliar un parámetro.");
         eprintln!("Uso:");
-        eprintln!("  {} 25s", programa);
-        eprintln!("  {} 1m50s", programa);
-        eprintln!("  {} 2h45m50s", programa);
+        eprintln!("  {} 25s NOMBRE-TAREA", programa);
+        eprintln!("  {} 1m50s NOMBRE-TAREA", programa);
+        eprintln!("  {} 2h45m50s NOMBRE-TAREA", programa);
         exit(2);
     } else if es_valido(&argumentos[0]) == false {
 		let programa: String = env::args().next().unwrap();
 		eprintln!("Error en el formato introducido: '{}'",argumentos[0]);
 		eprintln!("Uso:");
-        eprintln!("  {} 25s", programa);
-        eprintln!("  {} 1m50s", programa);
-        eprintln!("  {} 2h45m50s", programa);	
+        eprintln!("  {} 25s NOMBRE-TAREA", programa);
+        eprintln!("  {} 1m50s NOMBRE-TAREA", programa);
+        eprintln!("  {} 2h45m50s NOMBRE-TAREA", programa);	
         exit(2);
 	}
-
+	
+	
+	
+	let tarea = &argumentos[1];
+	
+	println!("tarea {}",tarea);
+	
+	
+	let mensaje = format!("{}\n{}\n{}","SE ACABO EL TIEMPO PARA ",tarea," DEFINA OTRA COSA");
+	
+	
+	
     let tiempo_definido = formatear_duracion(&argumentos[0]);
     let inicio = time::Instant::now();
 
@@ -40,7 +51,7 @@ fn main() {
             let transcurrido = inicio.elapsed();
             if tiempo_definido < transcurrido {
                 exit_code = 0;
-                simple_message_box::create_message_box("SE ACABO EL TIEMPO DE ESTA TAREA.  DEFINIR OTRA", "%%%%%%%%% TIEMPO %%%%%%%%%%%%");
+                simple_message_box::create_message_box(&mensaje, "%%%%%%%%% TIEMPO %%%%%%%%%%%%");
                 break;
             }
             let falta = tiempo_definido - transcurrido;
